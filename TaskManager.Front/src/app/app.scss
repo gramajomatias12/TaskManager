@@ -1,0 +1,17 @@
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.Pendiente { background-color: #ffc107; color: black; }
+.En.Progreso { background-color: #17a2b8; color: white; }
+.Completada { background-color: #28a745; color: white; }
+
+tr.mat-mdc-row:hover {
+  background-color: #f5f5f5;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
