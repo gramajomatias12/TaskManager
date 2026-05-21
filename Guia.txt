@@ -1,0 +1,223 @@
+GUIA DE ESTUDIO REESCRITA SEGUN EL PROYECTO REAL
+
+MES 1 - Fundamentos Full Stack (.NET + Angular + SQL Server)
+
+Objetivo
+Entender el flujo completo de una aplicacion Full Stack conectando Angular -> API .NET -> SQL Server, usando un enfoque practico y simple: frontend standalone, backend con controlador generico y base de datos con stored procedures.
+
+Que use realmente en este proyecto
+
+Backend (.NET)
+- C# basico aplicado a clases y objetos simples.
+- ASP.NET Core Web API en .NET 8.
+- Un controlador generico para consultar distintas entidades.
+- ADO.NET con SqlConnection, SqlCommand y SqlDataReader.
+- Lectura de configuracion desde appsettings.json.
+- CORS para permitir conexion con el frontend.
+- Swagger para probar la API en desarrollo.
+
+Frontend (Angular)
+- Angular 20.
+- Componentes standalone.
+- HttpClient para consumir la API.
+- Reactive Forms con FormControl y Validators.
+- Angular Material para tabla, dialogos, botones, inputs, toolbar, iconos y notificaciones.
+- Filtro en tiempo real sobre tabla de tareas.
+- Dialog modal para alta y edicion.
+
+Base de datos (SQL Server)
+- Tabla Tareas.
+- Stored procedures para seleccionar, insertar/actualizar y eliminar.
+- OPENJSON para recibir parametros desde la API.
+- FOR JSON PATH para devolver resultados en formato JSON.
+
+Importante
+En este proyecto no use Entity Framework Core ni una arquitectura por modulos clasica en Angular.
+Tampoco hay routing real implementado: Angular Router esta configurado, pero la aplicacion trabaja en una sola pantalla principal.
+
+Mini proyecto del portfolio
+Gestor de Tareas Full Stack
+
+Objetivo del proyecto
+Demostrar que sabes conectar un frontend Angular con una API en .NET y una base SQL Server, resolviendo un CRUD funcional con una estructura clara y facil de explicar en entrevista.
+
+Descripcion del proyecto
+Aplicacion web Full Stack para gestionar tareas. Permite listar, crear, editar y eliminar tareas, mostrando su estado actual. El frontend esta hecho con Angular 20 y Angular Material. El backend esta desarrollado con ASP.NET Core Web API. La persistencia se resuelve en SQL Server mediante stored procedures.
+
+Funcionalidades implementadas
+- Listado de tareas.
+- Alta de tarea mediante popup.
+- Edicion de tarea mediante popup.
+- Eliminacion de tarea.
+- Filtro por titulo en tiempo real.
+- Validacion basica: titulo obligatorio.
+- Notificaciones visuales al crear, actualizar o eliminar.
+
+Modelo de datos real
+Tabla: dbo.Tareas
+- cdTarea: int identity primary key.
+- dsTitulo: nvarchar(100) not null.
+- dsDescripcion: nvarchar(255) null.
+- cdEstado: nvarchar(50) not null.
+- dtCreacion: datetime not null.
+
+Estados manejados en el proyecto
+- Pendiente
+- En Progreso
+- Finalizada
+
+Stored procedures reales
+- SIS_Tareas_S: devuelve todas las tareas en JSON.
+- SIS_Tareas_IU: inserta o actualiza una tarea segun venga o no el id.
+- SIS_Tareas_D: elimina una tarea por id.
+
+Como funciona la arquitectura real
+1. El frontend llama a un endpoint generico: /api/Entidad/{entidad}.
+2. El backend arma el nombre del stored procedure segun la entidad recibida.
+3. Los datos del formulario se envian como un JSON string dentro de jsonParametros.
+4. SQL Server procesa el JSON con OPENJSON.
+5. El stored procedure devuelve la respuesta en JSON.
+6. El frontend refresca la tabla y muestra una notificacion.
+
+Backend real del proyecto
+Estructura principal
+- Controllers/EntidadController.cs
+- Classes/AccesoDatos.cs
+- Models/PeticionGenerica.cs
+- Models/Respuesta.cs
+- Program.cs
+- appsettings.json
+
+Que aprender del backend en este proyecto
+- Como exponer endpoints GET y POST.
+- Como centralizar la logica de acceso a datos en una clase.
+- Como consumir una connection string desde configuracion.
+- Como ejecutar stored procedures desde C#.
+- Como capturar errores y devolver respuestas simples.
+- Como mantener un backend pequeno pero funcional.
+
+Endpoints reales
+GET /api/Entidad/Tareas
+- Obtiene el listado de tareas ejecutando SIS_Tareas_S.
+
+POST /api/Entidad/Tareas
+- Inserta o actualiza una tarea ejecutando SIS_Tareas_IU.
+
+POST /api/Entidad/Tareas_D
+- Elimina una tarea ejecutando SIS_Tareas_D.
+
+Ejemplo real de payload para crear o editar
+{
+  "cdTarea": 0,
+  "dsTitulo": "Aprender ASP.NET Core",
+  "dsDescripcion": "Proyecto Full Stack",
+  "cdEstado": "Pendiente"
+}
+
+Frontend real del proyecto
+Estructura principal
+- src/app/app.ts
+- src/app/app.html
+- src/app/services/data.ts
+- src/app/tarea-form/tarea-form.ts
+- src/app/tarea-form/tarea-form.html
+
+Que aprender del frontend en este proyecto
+- Como construir una app Angular usando standalone components.
+- Como consumir una API con HttpClient.
+- Como abrir dialogos con Angular Material.
+- Como usar FormControl y Validators.
+- Como mostrar datos con MatTable.
+- Como aplicar filtros en tiempo real.
+- Como mostrar feedback al usuario con SnackBar.
+
+Pantallas reales del proyecto
+Pantalla principal
+- Toolbar superior.
+- Boton Nueva Tarea.
+- Input de busqueda.
+- Tabla con id, titulo, estado y acciones.
+- Botones para editar y eliminar.
+
+Formulario modal
+- Titulo obligatorio.
+- Descripcion.
+- Estado.
+- Botones Guardar y Cancelar.
+
+Tecnologias reales del proyecto
+Frontend
+- Angular 20
+- Angular Material
+- RxJS
+
+Backend
+- ASP.NET Core 8
+- ADO.NET
+- Swagger
+
+Base de datos
+- SQL Server
+- Stored Procedures
+- OPENJSON
+- FOR JSON PATH
+
+Plan semanal reescrito segun este proyecto
+
+Semana 1
+- Repasar C# basico.
+- Crear la API en ASP.NET Core.
+- Entender Program.cs, controllers y appsettings.
+- Probar un GET simple con Swagger o Postman.
+
+Semana 2
+- Conectar SQL Server desde .NET usando ADO.NET.
+- Crear la tabla Tareas.
+- Crear y probar los stored procedures.
+- Entender como enviar y leer JSON entre SQL y .NET.
+
+Semana 3
+- Crear la base del frontend con Angular.
+- Configurar HttpClient.
+- Consumir la API desde un service.
+- Mostrar tareas en pantalla.
+- Agregar formulario reactivo para alta y edicion.
+
+Semana 4
+- Integrar Angular Material.
+- Agregar filtro, popup y notificaciones.
+- Ajustar CORS y conexion frontend-backend.
+- Refactor final.
+- Escribir README y dejar el repo presentable.
+
+Resultado esperado al final del mes
+- API .NET funcional.
+- Frontend Angular consumiendo la API.
+- SQL Server con tabla y stored procedures.
+- CRUD completo de tareas.
+- Proyecto presentable para portfolio.
+- Base solida para pasar de frontend a full stack.
+
+Como defender este proyecto en entrevista
+"Es un proyecto Full Stack donde conecte Angular 20 con una API en ASP.NET Core 8 y una base SQL Server. En lugar de usar Entity Framework, implemente acceso a datos con ADO.NET y stored procedures. Del lado del frontend use componentes standalone, Angular Material, formularios reactivos y consumo HTTP. El objetivo fue entender el flujo completo de datos entre interfaz, API y base de datos con una solucion simple, funcional y explicable."
+
+Puntos fuertes reales para mencionar
+- No dependi de un ORM: entendi mejor la conexion con SQL Server.
+- Modele un CRUD completo de punta a punta.
+- Implemente una API reutilizable con un controlador generico.
+- Use JSON como contrato entre .NET y SQL.
+- Arme una interfaz funcional con Angular Material.
+- El proyecto es chico, pero toca frontend, backend y base de datos de forma real.
+
+README recomendado para este proyecto
+Secciones sugeridas
+- Descripcion del proyecto.
+- Tecnologias utilizadas.
+- Arquitectura general.
+- Funcionalidades.
+- Script de base de datos.
+- Como ejecutar backend y frontend.
+- Capturas o demo si despues queres sumarlas.
+
+Conclusion
+Esta version del proyecto representa mejor una etapa inicial de transicion a Full Stack porque no se apoya en herramientas de abstraccion altas como Entity Framework. Lo valioso aca es que practicaste el circuito completo: interfaz, consumo HTTP, API, ejecucion de stored procedures y persistencia en SQL Server.

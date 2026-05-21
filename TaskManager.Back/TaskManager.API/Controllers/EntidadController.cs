@@ -15,10 +15,12 @@ namespace TaskManager.API.Controllers
         public IActionResult Get(string entidad)
         {
             AccesoDatos db = new(_configuration);
-            // Simula la nomenclatura de tu trabajo: SIS_Objeto_S
+
+            // Le mandamos el JSON vacío para que la clase AccesoDatos no proteste
             Respuesta res = db.Consultar("SIS_" + entidad + "_S", "{}");
 
             if (res.isException) return BadRequest(res.mensaje);
+
             return Ok(res.Items);
         }
 
